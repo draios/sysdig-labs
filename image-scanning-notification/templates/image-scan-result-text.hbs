@@ -1,0 +1,16 @@
+{{scanResult.policy.name}} evaluation
+{{#if scanResult.isFail}}failed{{/if}}
+{{#if scanResult.isPass}}passed{{/if}}
+
+(
+{{#if scanResult.stopRows}}
+  {{scanResult.stopRows.length}} stop
+  {{#if scanResult.warnRows}},{{/if}}
+{{/if}}
+
+{{#if scanResult.warnRows}}
+  {{scanResult.warnRows.length}} warn
+{{/if}}
+):
+
+{{image.repo}}

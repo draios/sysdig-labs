@@ -1,0 +1,456 @@
+<!--
+    Copyright 2018 Draios Inc.
+  
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+  
+        http://www.apache.org/licenses/LICENSE-2.0
+  
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>{{subject}}</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400" rel="stylesheet">
+    <style type="text/css">
+      /* CLIENT-SPECIFIC STYLES */
+      #outlook a{padding:0;} /* Force Outlook to provide a "view in browser" message */
+      .ReadMsgBody{width:100%;} .ExternalClass{width:100%;} /* Force Hotmail to display emails at full width */
+      .ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div {line-height: 100%;} /* Force Hotmail to display normal line spacing */
+      body, table, td, a{-webkit-text-size-adjust:100%; -ms-text-size-adjust:100%;} /* Prevent WebKit and Windows mobile changing default text sizes */
+      table, td{mso-table-lspace:0pt; mso-table-rspace:0pt;} /* Remove spacing between tables in Outlook 2007 and up */
+      img{-ms-interpolation-mode:bicubic;} /* Allow smoother rendering of resized image in Internet Explorer */
+      /* RESET STYLES */
+      body{margin:0; padding:0;}
+      img{border:0; height:auto; line-height:100%; outline:none; text-decoration:none;}
+      table{border-collapse:collapse !important;}
+      body{height:100% !important; margin:0; padding:0; width:100% !important;}
+      /* iOS BLUE LINKS */
+      .appleBody a {color:#3062b8; text-decoration: none;}
+      .appleFooter a {color:#3062b8; text-decoration: none;}
+      /* MOBILE STYLES */
+      @media screen and (max-width: 450px) {
+        /* ALLOWS FOR FLUID TABLES */
+        table[class="wrapper"]{
+          width:100% !important;
+        }
+        /* ADJUSTS LAYOUT OF LOGO IMAGE */
+        td[class="logo"]{
+          text-align: left;
+        /* padding: 20px 0 20px 0 !important; */
+        }
+        td[class="logo"] img{
+          margin:0 auto!important;
+        }
+        /* USE THESE CLASSES TO HIDE CONTENT ON MOBILE */
+        td[class="mobile-hide"]{
+          display:none;
+        }
+        img[class="mobile-hide"]{
+          display: none !important;
+        }
+        img[class="img-max"]{
+          max-width: 100% !important;
+          height:auto !important;
+        }
+        /* FULL-WIDTH TABLES */
+        table[class="responsive-table"]{
+          width:100%!important;
+        }
+        /* UTILITY CLASSES FOR ADJUSTING PADDING ON MOBILE */
+        td[class="padding"]{
+          /* padding: 10px 5% 15px 5% !important; */
+        }
+        td[class="padding-copy"]{
+          /* padding: 0 5% 10px 5% !important; */
+        }
+        td[class="padding-meta"]{
+          /* padding: 30px 5% 0px 5% !important; */
+        }
+        td[class="no-pad"]{
+          /* padding: 0 0 20px 0 !important; */
+        }
+        td[class="no-padding"]{
+          /* padding: 0 !important; */
+        }
+        td[class="section-padding"]{
+          /* padding: 20px 15px 20px 15px !important; */
+        }
+        td[class="section-padding-bottom-image"]{
+          /* padding: 50px 15px 0 15px !important; */
+        }
+        /* ADJUST BUTTONS ON MOBILE */
+        td[class="mobile-wrapper"]{
+          /* padding: 10px 5% 15px 5% !important; */
+        }
+        table[class="mobile-button-container"]{
+        margin:0 auto;
+          width:100% !important;
+        }
+        a[class="mobile-button"]{
+          /*  width:80% !important;
+          padding: 15px !important;
+          border: 0 !important;
+          font-size: 16px !important; */
+        }
+      }
+    </style>
+  </head>
+  <body style="margin: 0; padding: 0;">
+    <div style="display: none; max-height: 0; overflow: hidden;">
+      {{textSummary}}
+    </div>
+
+    <!--                                                            --->
+    <!--  Logo                                                      --->
+    <!--                                                            --->
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr>
+        <td bgcolor="#ffffff">
+          <div align="center" style="padding: 0px 15px 0px 15px;">
+            <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;" class="wrapper">
+              <tr>
+                <td style="padding: 20px 0px 30px 0px;" class="logo">
+                  <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                      <td bgcolor="#ffffff" width="100" align="center">
+                          <a href="{{sysdigUrl}}" target="_blank"><img alt="Sysdig logo" src="{{assetsBaseUrl}}sysdig-logo.png" width="141" height="48" style="display: block;" border="0"></a>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </td>
+      </tr>
+    </table>
+
+    <!--                                                            --->
+    <!--  Summary                                                   --->
+    <!--                                                            --->
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr>
+        <td bgcolor="#ffffff" align="center" style="padding: 0px 16px 16px 16px;" class="section-padding">
+          <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;" class="responsive-table">
+            <tr>
+              <td>
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <td>
+                      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                          <td align="left" style="padding: 0 0 0 0; font-size: 15px; line-height: 18px; font-family: Roboto, sans-serif; color: #738c97;" class="padding-copy"><strong>Image</strong>: {{image.repo}}</td>
+                        </tr>
+                        <tr>
+                          <td align="left" style="padding: 0 0 0 0; font-size: 11px; line-height: 18px; font-family: Roboto, sans-serif; color: #738c97; word-break: break-all" class="padding-copy"><strong>Image ID</strong>: {{image.id}}</td>
+                        </tr>
+                        <tr>
+                          <td align="left" style="padding: 0 0 0 0; font-size: 11px; line-height: 18px; font-family: Roboto, sans-serif; color: #738c97; word-break: break-all" class="padding-copy"><strong>Created on</strong>: {{image.createdAt}}</td>
+                        </tr>
+                        <tr>
+                          <td align="left" style="padding: 0 0 0 0; font-size: 11px; line-height: 18px; font-family: Roboto, sans-serif; color: #738c97; word-break: break-all" class="padding-copy"><strong>OS / Version</strong>: {{image.os}} / {{image.osVersion}}</td>
+                        </tr>
+                      </table>
+                      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                          <td align="center" style="padding: 20px 12px 0 0; font-size: 15px; line-height: 24px; font-family: Roboto, sans-serif; color: #738c97;" class="padding-meta">
+                            {{#if scanResult.isFail}}
+                              <img src="{{assetsBaseUrl}}icon-error.png" height="48" width="48" />
+                            {{/if}}
+                            {{#if scanResult.isPass}}
+                              <img src="{{assetsBaseUrl}}icon-check.png" height="48" width="48" />
+                            {{/if}}
+                          </td>
+                          <td align="left" style="padding: 20px 0 0 0; font-size: 15px; line-height: 24px; font-family: Roboto, sans-serif; color: #738c97;" class="padding-meta">
+                            {{scanResult.policy.name}} evaluation
+                            
+                            {{#if scanResult.isFail}}
+                              <span style="color: #d0191c">Failed</span>
+                            {{/if}}
+                            {{#if scanResult.isPass}}
+                              <span style="color: #7ec25b">Passed</span>
+                            {{/if}}
+                            
+                            with
+                            
+                            {{#if scanResult.stopRows}}
+                              <span style="color: #d0191c">{{scanResult.stopRows.length}} stop</span>
+                              {{#if scanResult.warnRows}}
+                                and
+                              {{/if}}
+                            {{/if}}
+                            
+                            {{#if scanResult.warnRows}}
+                              <span style="color: #fac900">{{scanResult.warnRows.length}} Warn</span>
+                            {{/if}}
+                            
+                            actions on {{timestampToString scanResult.evaluatedAt}}.
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <table width="100%" border="0" cellspacing="0" cellpadding="0" class="mobile-button-container">
+                        <tr>
+                          <td align="center" style="padding: 20px 0 0 0;" class="padding-copy">
+                            <table border="0" cellspacing="0" cellpadding="0" class="responsive-table">
+                              <tr>
+                                <td align="center"><a href="{{sysdigUrl}}#/scanning/repositories/{{image.fullTag}}/{{image.id}}?history=1" target="_blank" style="font-size: 15px; font-family: Roboto, sans-serif; font-weight: normal; color: #3062b8; text-decoration: none; background-color: #FFF; border: none; display: inline-block;" class="mobile-button">See all scanning result in the browser &rarr;</a></td>
+                              </tr>
+                            </table>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+
+    <!--                                                            --->
+    <!--  Evaluation breakdown                                      --->
+    <!--                                                            --->
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr>
+        <td bgcolor="#ffffff" align="center" style="padding: 40px 15px 15px 15px;" class="section-padding">
+          <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;" class="responsive-table">
+            <tr>
+              <td>
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <td>
+                      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                          <td align="center" style="font-size: 21px; font-family: 'Roboto Mono', mono; color: #253746;" class="padding-copy">Evaluation Breakdown</td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr>
+        <td bgcolor="#ffffff" align="center" style="padding: 12px 16px 16px 16px;" class="section-padding">
+          <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;" class="responsive-table">
+            {{#each scanResult.rows}}
+              <tr>
+                <td style="padding: 8px 0 8px 0; border-top: 1px solid #e3ebeb;">
+                  <table cellspacing="0" cellpadding="0" border="0" width="100%">
+                    <tr>
+                      <td valign="top" class="mobile-wrapper">
+                        <table cellpadding="0" cellspacing="0" border="0" align="left">
+                          <tr>
+                            <td style="padding: 0 8px 0 0;">
+                              <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                                <tr>
+                                  <td align="left">
+                                    {{#if isStop}}
+                                      <img src="{{../assetsBaseUrl}}icon-error.png" height="24" width="24" />
+                                    {{/if}}
+                                    {{#if isWarn}}
+                                      <img src="{{../assetsBaseUrl}}icon-warn.png" height="24" width="24" />
+                                    {{/if}}
+                                  </td>
+                                </tr>
+                              </table>
+                            </td>
+                          </tr>
+                        </table>
+                        <table cellpadding="0" cellspacing="0" border="0" width="30%" style="width: 30%;" align="left">
+                          <tr>
+                            <td style="padding: 0 8px 12px 0;">
+                              <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                                <tr>
+                                  <td align="left" style="padding: 0 0 0 0;">
+                                    <table cellpadding="0" cellspacing="0" border="0" align="left">
+                                      <tr>
+                                        <td>
+                                          <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                                            <tr>
+                                              <td align="left" style="font-family: Roboto, sans-serif; color: #253746; font-size: 12px; text-transform: uppercase; word-break: break-all;">{{trigger}}</td>
+                                            </tr>
+                                          </table>
+                                        </td>
+                                      </tr>
+                                      <tr>
+                                        <td>
+                                          <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                                            <tr>
+                                              <td align="left" style="font-family: Roboto, sans-serif; color: #777777; font-size: 11px; word-break: break-all;">{{gate}}</td>
+                                            </tr>
+                                          </table>
+                                        </td>
+                                      </tr>
+                                    </table>
+                                  </td>
+                                </tr>
+                              </table>
+                            </td>
+                          </tr>
+                        </table>
+                        <table cellpadding="0" cellspacing="0" border="0" width="60%" style="width: 60%;" align="right">
+                          <tr>
+                            <td>
+                              <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                                <tr>
+                                  <td align="left" style="font-family: Roboto, sans-serif; color: #253746; font-size: 12px;">{{{output}}}</td>
+                                </tr>
+                              </table>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            {{/each}}
+          </table>
+        </td>
+      </tr>
+    </table>
+
+    <!--                                                            --->
+    <!--  Vulnerabilities                                           --->
+    <!--                                                            --->
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr>
+        <td bgcolor="#ffffff" align="center" style="padding: 40px 16px 16px 16px;" class="section-padding">
+          <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;" class="responsive-table">
+            <tr>
+              <td>
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <td>
+                      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                          <td align="center" style="font-size: 21px; font-family: 'Roboto Mono', mono; color: #253746;" class="padding-copy">Vulnerabilities (Operating System)</td>
+                        </tr>
+                        <tr>
+                          <td align="center" style="font-size: 12px; font-family: Roboto, sans-serif; color: #738c97;" class="padding-copy">High or medium vulnerabilities with fix available</td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr>
+        <td bgcolor="#ffffff" align="center" style="padding: 12px 16px 16px 16px;" class="section-padding">
+          <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;" class="responsive-table">
+            <tr style="padding: 4px 0 0 4px;">
+              <td align="left" style="font-family: Roboto, sans-serif; color: #253746; font-size: 12px; font-weight: bold;">
+                CVE
+                </td>
+              <td align="left" style="font-family: Roboto, sans-serif; color: #253746; font-size: 12px; font-weight: bold;">
+                Severity
+                </td>
+              <td align="left" style="font-family: Roboto, sans-serif; color: #253746; font-size: 12px; font-weight: bold;">
+                Package name
+                </td>
+              <td align="left" style="font-family: Roboto, sans-serif; color: #253746; font-size: 12px; font-weight: bold;">
+                Package version
+                </td>
+              <td align="left" style="font-family: Roboto, sans-serif; color: #253746; font-size: 12px; font-weight: bold;">
+                Fix version
+              </td>
+            </tr>
+
+            {{#each vulnerabilities.list}}
+              <tr style="padding: 4px 0 0 4px;">
+                <td align="left" style="font-family: Roboto, sans-serif; color: #253746; font-size: 12px;">
+                  <a href="{{cveLink}}">{{cve}}</a>
+                  </td>
+                <td align="left" style="font-family: Roboto, sans-serif; color: #253746; font-size: 12px;">
+                  {{severity}}
+                  </td>
+                <td align="left" style="font-family: Roboto, sans-serif; color: #253746; font-size: 12px;">
+                  {{packageName}}
+                  </td>
+                <td align="left" style="font-family: Roboto, sans-serif; color: #253746; font-size: 12px;">
+                  {{packageVersion}}
+                  </td>
+                <td align="left" style="font-family: Roboto, sans-serif; color: #253746; font-size: 12px;">
+                  {{fixVersion}}
+                </td>
+              </tr>
+            {{/each}}
+          </table>
+        </td>
+      </tr>
+
+
+      {{#if vulnerabilities.hasMore}}
+        <td bgcolor="#ffffff" align="center" style="padding: 8px 16px 16px 16px;" class="section-padding">
+          <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;" class="responsive-table">
+            <tr>
+              <td>
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <td>
+                      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                          <td align="center" style="font-size: 12px; font-family: Roboto, sans-serif; color: #738c97;" class="padding-copy">You can see all {{vulnerabilities.count}} vulnerabilities at <a href="{{sysdigUrl}}#/scanning/repositories/{{image.fullTag}}/{{image.id}}?history=1">Sysdig Secure</a>.</td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </td>
+      {{/if}}
+    </table>
+
+    <!--                                                            --->
+    <!--  Footer                                                    --->
+    <!--                                                            --->
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr>
+        <td bgcolor="#ffffff" align="center">
+          <table width="100%" style="max-width: 600px;" border="0" cellspacing="0" cellpadding="0" align="center">
+            <tr>
+              <td style="padding: 32px 0px 32px 0px;">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center" class="responsive-table">
+                  <tr>
+                    <td align="center" valign="middle" style="font-size: 12px; line-height: 16px; font-family: Roboto, sans-serif; color:#738c97;">
+                      <a href="{{sysdigUrl}}" style="text-decoration: underline;">Open Sysdig Secure</a>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>
