@@ -4,7 +4,7 @@ Send an email with the result of the latest image scanning.
 
 ## How?
 
-Make sure you have `npm` installed.
+Make sure you have `node` and `npm` installed (preferrably the latest version).
 
 Then, install the tool:
 
