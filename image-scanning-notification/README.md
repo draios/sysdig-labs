@@ -28,3 +28,5 @@ node index \
 ```
 
 You can find your API token at https://secure.sysdig.com/#/settings/user (or your onprem Sysdig deployment URL).
+
+Also, make sure you specify the repository tag digest in the `image` parameter.
