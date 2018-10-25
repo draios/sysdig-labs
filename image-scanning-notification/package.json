@@ -1,0 +1,26 @@
+{
+  "name": "image-scanning-notification",
+  "version": "0.1.0",
+  "description": "Export Sysdig Secure image scanning result via email",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/davideschiera/scanning-to-email.git"
+  },
+  "author": "davide@sysdig.com",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/davideschiera/scanning-to-email/issues"
+  },
+  "homepage": "https://github.com/davideschiera/scanning-to-email#readme",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "handlebars": "^4.0.12",
+    "minimist": "^1.2.0",
+    "moment": "^2.22.2",
+    "nodemailer": "^4.6.8"
+  }
+}
