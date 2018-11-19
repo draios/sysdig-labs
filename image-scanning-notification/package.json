@@ -17,10 +17,12 @@
   },
   "homepage": "https://github.com/davideschiera/scanning-to-email#readme",
   "dependencies": {
-    "axios": "^0.18.0",
-    "handlebars": "^4.0.12",
-    "minimist": "^1.2.0",
-    "moment": "^2.22.2",
-    "nodemailer": "^4.6.8"
+    "axios": "0.18.0",
+    "handlebars": "4.0.12",
+    "minimist": "1.2.0",
+    "moment": "2.22.2"
+  },
+  "devDependencies": {
+    "nodemailer": "4.7.0"
   }
 }
