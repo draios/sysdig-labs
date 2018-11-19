@@ -92,22 +92,22 @@ function parseParameters(args) {
     sysdigToken: getParam(argv, 'sysdig-token'),
     assetsBaseUrl: 'https://download.sysdig.com/assets/',
 
-    recipients: Array.isArray(getParam(argv, 'recipient'))
-      ? getParam(argv, 'recipient')
-      : [getParam(argv, 'recipient')],
-    sender: getParam(argv, 'sender', 'notifications@sysdig.com'),
-
     exportAs: getParam(argv, 'export-as', 'email'),
-
+    
     imageId: getParam(argv, 'image')
   };
-
+  
   if (['email', 'html', 'text'].indexOf(basicOptions.exportAs) === -1) {
     throw `Parameter 'export-as' is set with invalid value (email, html, text are valid)`;
   }
-
+  
   if (basicOptions.exportAs === 'email') {
     return Object.assign({}, basicOptions, {
+      recipients: Array.isArray(getParam(argv, 'recipient'))
+        ? getParam(argv, 'recipient')
+        : [getParam(argv, 'recipient')],
+      sender: getParam(argv, 'sender', 'notifications@sysdig.com'),
+    
       smtpHost: getParam(argv, 'smtp-host'),
       smtpPort: getParam(argv, 'smtp-port', 25),
       smtpUser: getParam(argv, 'smtp-user'),
