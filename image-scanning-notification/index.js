@@ -16,7 +16,7 @@
 'use strict';
 
 const axios = require('axios');
-const Handlebars = require('Handlebars');
+const Handlebars = require('handlebars');
 const nodemailer = require('nodemailer');
 const moment = require('moment');
 const minimist = require('minimist');
