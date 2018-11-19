@@ -22,20 +22,19 @@ const moment = require('moment');
 const minimist = require('minimist');
 const fs = require('fs');
 
-main(process.argv.slice(2));
+//
+// Get parameters
+//
+const cmdLineParams = parseParameters(process.argv.slice(2));
+const logging = getLogging(cmdLineParams);
 
-async function main(args) {
-  //
-  // Get parameters
-  //
-  console.info('Reading parameters...');
-  const params = parseParameters(args);
+main(cmdLineParams);
 
+async function main(params) {
   //
   // Fetch data
   //
-  console.info('Fetching data...');
-
+  logging.info('Fetching data...');
   const apiAdapter = axios.create({
     baseURL: params.sysdigUrl,
     timeout: 30000,
@@ -50,39 +49,45 @@ async function main(args) {
   //
   // Define template context
   //
-  console.info('Defining email context...');
+  logging.info('Defining email context...');
   const context = defineContext(data, params);
 
   //
   // Mix data and template
   //
-  console.info('Creating email content...');
+  logging.info('Creating email content...');
   initializeRendering();
   const subject = await buildContent(context, './templates/image-scan-result-subject.hbs', params);
   const text = await buildContent(context, './templates/image-scan-result-text.hbs', params);
   const html = await buildContent(
-    {
-      ...context,
-      textSummary: text.replace(/\n/g, ''),
-      subject: subject.replace(/\n/g, '')
-    },
+    { ...context, textSummary: text.replace(/\n/g, ''), subject: subject.replace(/\n/g, '') },
     './templates/image-scan-result-html.hbs',
     params
   );
 
   //
-  // Send email
+  // Export
   //
-  console.info('Sending email...');
-  await sendEmail({ subject, textContent: text, htmlContent: html }, params);
+  switch (params.exportAs) {
+    case 'email':
+      logging.info('Sending email...');
+      await sendEmail({ subject, textContent: text, htmlContent: html }, params);
+      break;
+    case 'html':
+      console.info(html);
+      break;
+    case 'text':
+      console.info(text);
+      break;
+  }
 
-  console.info('All done!');
+  logging.info('All done!');
 }
 
 function parseParameters(args) {
   const argv = minimist(args);
 
-  return {
+  const basicOptions = {
     sysdigUrl: getParam(argv, 'sysdig-url'),
     sysdigToken: getParam(argv, 'sysdig-token'),
     assetsBaseUrl: 'https://download.sysdig.com/assets/',
@@ -92,17 +97,29 @@ function parseParameters(args) {
       : [getParam(argv, 'recipient')],
     sender: getParam(argv, 'sender', 'notifications@sysdig.com'),
 
-    smtpHost: getParam(argv, 'smtp-host'),
-    smtpPort: getParam(argv, 'smtp-port', 25),
-    smtpUser: getParam(argv, 'smtp-user'),
-    smtpPass: getParam(argv, 'smtp-pass'),
+    exportAs: getParam(argv, 'export-as', 'email'),
 
     imageId: getParam(argv, 'image')
   };
 
+  if (['email', 'html', 'text'].indexOf(basicOptions.exportAs) === -1) {
+    throw `Parameter 'export-as' is set with invalid value (email, html, text are valid)`;
+  }
+
+  if (basicOptions.exportAs === 'email') {
+    return Object.assign({}, basicOptions, {
+      smtpHost: getParam(argv, 'smtp-host'),
+      smtpPort: getParam(argv, 'smtp-port', 25),
+      smtpUser: getParam(argv, 'smtp-user'),
+      smtpPass: getParam(argv, 'smtp-pass')
+    });
+  } else {
+    return basicOptions;
+  }
+
   function getParam(argv, name, defValue) {
     if (argv[name] === undefined && defValue === undefined) {
-      throw `Arguments '${name}' is required`;
+      throw `Parameter '${name}' is required`;
     }
 
     return argv[name] || defValue;
@@ -160,26 +177,16 @@ async function fetchData(apiAdapter, params) {
     const scanResult = scanResultObj[Object.keys(scanResultObj)[0]];
 
     const rowHeaders = scanResult.result.header;
-    const rows = scanResult.result.rows
-      .map((row) => {
-        return {
-          gateAction: row[rowHeaders.indexOf('Gate_Action')],
-          trigger: row[rowHeaders.indexOf('Trigger')],
-          gate: row[rowHeaders.indexOf('Gate')],
-          output: row[rowHeaders.indexOf('Check_Output')],
-          isStop: row[rowHeaders.indexOf('Gate_Action')] === 'stop',
-          isWarn: row[rowHeaders.indexOf('Gate_Action')] === 'warn'
-        };
-      })
-      .sort((a, b) => {
-        const actions = ['stop', 'warn'];
-        const actionSort = actions.indexOf(a.gateAction) - actions.indexOf(b.gateAction);
-        if (actionSort !== 0) {
-          return actionSort;
-        }
-
-        return a.output.localeCompare(b.output);
-      });
+    const rows = scanResult.result.rows.map((row) => {
+      return {
+        gateAction: row[rowHeaders.indexOf('Gate_Action')],
+        trigger: row[rowHeaders.indexOf('Trigger')],
+        gate: row[rowHeaders.indexOf('Gate')],
+        output: row[rowHeaders.indexOf('Check_Output')],
+        isStop: row[rowHeaders.indexOf('Gate_Action')] === 'stop',
+        isWarn: row[rowHeaders.indexOf('Gate_Action')] === 'warn'
+      };
+    });
 
     const policyId = latestScan.detail.result.matched_mapping_rule.policy_id;
     const policy = latestScan.detail.policy.policies.find((policy) => policy.id === policyId);
@@ -203,26 +210,15 @@ async function fetchData(apiAdapter, params) {
   }
 
   function parseVulnerabilitiesData(data) {
-    const vulnerabilities = data.vulnerabilities
-      .map(parseVulnerability)
-      .filter(
-        (vulnerability) =>
-          vulnerability.fix !== 'None' && ['High', 'Medium'].indexOf(vulnerability.severity) >= 0
-      )
-      .sort((a, b) => {
-        const severities = ['High', 'Medium'];
-        const severitySort = severities.indexOf(a.severity) - severities.indexOf(b.severity);
-        if (severitySort !== 0) {
-          return severitySort;
-        }
-
-        return a.cve.localeCompare(b.cve);
-      });
-
+    const vulnerabilities = data.vulnerabilities.map(parseVulnerability);
     return {
-      list: vulnerabilities.slice(0, 20),
-      count: vulnerabilities.length,
-      hasMore: vulnerabilities.length > 20
+      list: vulnerabilities
+        .filter(
+          (vulnerability) =>
+            vulnerability.fix !== 'None' && ['High', 'Medium'].indexOf(vulnerability.severity) >= 0
+        )
+        .slice(0, 30),
+      count: data.vulnerabilities.length
     };
   }
 
@@ -284,7 +280,7 @@ async function sendEmail(content, params) {
   // send mail with defined transport object
   const result = await promisify(transporter, transporter.sendMail, mailOptions);
 
-  console.log('Message sent: %s', result.messageId);
+  logging.log('Message sent: %s', result.messageId);
 }
 
 async function readFile(filePath) {
@@ -301,4 +297,26 @@ async function promisify(target, fn, ...args) {
       }
     });
   });
+}
+
+function getLogging(params) {
+  if (params.exportAs === 'email') {
+    return {
+      log: function(...args) {
+        console.log(...args);
+      },
+      info: function(...args) {
+        console.info(...args);
+      }
+    };
+  } else {
+    return {
+      log: function() {
+        // noop
+      },
+      info: function() {
+        // noop
+      }
+    };
+  }
 }
