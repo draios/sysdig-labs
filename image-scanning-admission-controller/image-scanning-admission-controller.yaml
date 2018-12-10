@@ -1,0 +1,158 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    controller-tools.k8s.io: "1.0"
+  name: image-scan-k8s-webhook-system
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  creationTimestamp: null
+  name: image-scan-k8s-webhook-manager-role
+rules:
+- apiGroups:
+  - admissionregistration.k8s.io
+  resources:
+  - mutatingwebhookconfigurations
+  - validatingwebhookconfigurations
+  verbs:
+  - get
+  - list
+  - watch
+  - create
+  - update
+  - patch
+  - delete
+- apiGroups:
+  - ""
+  resources:
+  - secrets
+  verbs:
+  - get
+  - list
+  - watch
+  - create
+  - update
+  - patch
+  - delete
+- apiGroups:
+  - ""
+  resources:
+  - services
+  verbs:
+  - get
+  - list
+  - watch
+  - create
+  - update
+  - patch
+  - delete
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  creationTimestamp: null
+  name: image-scan-k8s-webhook-manager-rolebinding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: image-scan-k8s-webhook-manager-role
+subjects:
+- kind: ServiceAccount
+  name: default
+  namespace: image-scan-k8s-webhook-system
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: image-scan-k8s-webhook-webhook-server-secret
+  namespace: image-scan-k8s-webhook-system
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: sysdig-secure-token
+  namespace: image-scan-k8s-webhook-system
+type: Opaque
+stringData:
+  config.yaml: |-
+      ANCHORE_CLI_TOKEN: {{ANCHORE_CLI_TOKEN}}
+      ANCHORE_CLI_URL: {{ANCHORE_CLI_URL}}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    control-plane: controller-manager
+    controller-tools.k8s.io: "1.0"
+  name: image-scan-k8s-webhook-controller-manager-service
+  namespace: image-scan-k8s-webhook-system
+spec:
+  ports:
+  - port: 443
+  selector:
+    control-plane: controller-manager
+    controller-tools.k8s.io: "1.0"
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    control-plane: controller-manager
+    controller-tools.k8s.io: "1.0"
+  name: image-scan-k8s-webhook-controller-manager
+  namespace: image-scan-k8s-webhook-system
+spec:
+  selector:
+    matchLabels:
+      control-plane: controller-manager
+      controller-tools.k8s.io: "1.0"
+  serviceName: image-scan-k8s-webhook-controller-manager-service
+  template:
+    metadata:
+      labels:
+        control-plane: controller-manager
+        controller-tools.k8s.io: "1.0"
+    spec:
+      containers:
+      - command:
+        - /root/manager
+        env:
+        - name: POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        - name: SECRET_NAME
+          value: image-scan-k8s-webhook-webhook-server-secret
+        image: kaizheh/sysdig-image-scanning-trigger
+        imagePullPolicy: Always
+        name: manager
+        ports:
+        - containerPort: 9876
+          name: webhook-server
+          protocol: TCP
+        resources:
+          limits:
+            cpu: 100m
+            memory: 30Mi
+          requests:
+            cpu: 100m
+            memory: 20Mi
+        volumeMounts:
+        - mountPath: /tmp/cert
+          name: cert
+          readOnly: true
+        - mountPath: /tmp/sysdig-token
+          name: sysdig-token
+          readOnly: true
+      terminationGracePeriodSeconds: 10
+      volumes:
+      - name: cert
+        secret:
+          defaultMode: 420
+          secretName: image-scan-k8s-webhook-webhook-server-secret
+      - name: sysdig-token
+        secret:
+          defaultMode: 420
+          secretName: sysdig-secure-token
