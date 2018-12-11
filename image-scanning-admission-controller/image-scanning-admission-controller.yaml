@@ -125,7 +125,7 @@ spec:
               fieldPath: metadata.namespace
         - name: SECRET_NAME
           value: image-scan-k8s-webhook-webhook-server-secret
-        image: kaizheh/sysdig-image-scanning-trigger
+        image: quay.io/sysdig/sysdig-image-scanning-trigger:latest
         imagePullPolicy: Always
         name: manager
         ports:
