@@ -1,0 +1,7 @@
+#!/bin/sh
+
+set -eux
+
+go fmt ./
+
+env GOOS=$(uname -s | tr '[:upper:]' '[:lower:]') GOARCH=amd64 go build -a
