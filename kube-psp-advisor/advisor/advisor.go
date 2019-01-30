@@ -10,6 +10,7 @@ import (
 	"k8s.io/api/policy/v1beta1"
 	k8sJSON "k8s.io/apimachinery/pkg/runtime/serializer/json"
 	"k8s.io/client-go/kubernetes"
+	_ "k8s.io/client-go/plugin/pkg/client/auth/gcp"
 )
 
 type Advisor struct {
