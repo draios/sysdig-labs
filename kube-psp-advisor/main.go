@@ -5,6 +5,8 @@ import (
 	"k8s.io/client-go/util/homedir"
 	"path/filepath"
 	"scratch/kaizhe/kube-psp-advisor/advisor"
+
+	_ "k8s.io/client-go/plugin/pkg/client/auth"
 )
 
 func main() {
