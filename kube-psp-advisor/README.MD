@@ -2,7 +2,7 @@
 
 ## Build
 ```
-make deps build
+make build
 ```
 
 ## Run
