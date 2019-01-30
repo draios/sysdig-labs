@@ -2,11 +2,11 @@ package main
 
 import (
 	"flag"
-	"k8s.io/client-go/util/homedir"
 	"path/filepath"
-	"scratch/kaizhe/kube-psp-advisor/advisor"
+	"sysdig-labs/kube-psp-advisor/advisor"
 
-	_ "k8s.io/client-go/plugin/pkg/client/auth"
+        _ "k8s.io/client-go/plugin/pkg/client/auth"
+	"k8s.io/client-go/util/homedir"
 )
 
 func main() {

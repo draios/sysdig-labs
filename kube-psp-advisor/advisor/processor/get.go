@@ -1,12 +1,13 @@
 package processor
 
 import (
+	"reflect"
+	"strings"
+	"sysdig-labs/kube-psp-advisor/advisor/types"
+	"sysdig-labs/kube-psp-advisor/utils"
+
 	"k8s.io/api/core/v1"
 	v12 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"reflect"
-	"scratch/kaizhe/kube-psp-advisor/advisor/types"
-	"scratch/kaizhe/kube-psp-advisor/utils"
-	"strings"
 )
 
 const (
@@ -17,25 +18,25 @@ const (
 	ReplicaSet            = "ReplicaSet"
 	ReplicationController = "ReplicationController"
 	Job                   = "Job"
-	CronJob = "CronJob"
+	CronJob               = "CronJob"
 )
 
 func getSecuritySpec(metadata types.Metadata, namespace string, spec v1.PodSpec) ([]types.ContainerSecuritySpec, types.PodSecuritySpec) {
 	cssList := []types.ContainerSecuritySpec{}
 	podSecuritySpec := types.PodSecuritySpec{
-		Metadata:    metadata,
-		Namespace:   namespace,
-		HostPID:     spec.HostPID,
-		HostNetwork: spec.HostNetwork,
-		HostIPC:     spec.HostIPC,
-		VolumeTypes: getVolumeTypes(spec),
+		Metadata:       metadata,
+		Namespace:      namespace,
+		HostPID:        spec.HostPID,
+		HostNetwork:    spec.HostNetwork,
+		HostIPC:        spec.HostIPC,
+		VolumeTypes:    getVolumeTypes(spec),
 		MountHostPaths: getVolumeHostPaths(spec),
 	}
 
 	for _, container := range spec.Containers {
 		addCapList, dropCapList := getCapabilities(container.SecurityContext)
 		csc := types.ContainerSecuritySpec{
-			Metadata: metadata,
+			Metadata:                 metadata,
 			ContainerName:            container.Name,
 			ImageName:                container.Image,
 			Namespace:                namespace,
@@ -95,7 +96,7 @@ func (p *Processor) getSecuritySpecFromReplicaSets() ([]types.ContainerSecurityS
 		if p.hasSpecRecorded(rs.Name) {
 			continue
 		}
-		
+
 		p.resourceNamePrefix[rs.Name] = true
 		cspList2, psc := getSecuritySpec(types.Metadata{
 			Name: rs.Name,

@@ -1,17 +1,17 @@
 package report
 
 import (
-	"scratch/kaizhe/kube-psp-advisor/advisor/types"
+	"sysdig-labs/kube-psp-advisor/advisor/types"
 )
 
 const (
-	allPrivilegEscalation = "allowPrivilegeEscalation"
-	runAsUser             = "runAsUser"
-	runAsGroup            = "runAsGroup"
-	runAsNonRoot          = "runAsNonRoot"
-	dropCapabilities      = "dropCapabilities"
-	addCapabilities       = "addCapabilities"
-	privileged            = "privileged"
+	allPrivilegEscalation  = "allowPrivilegeEscalation"
+	runAsUser              = "runAsUser"
+	runAsGroup             = "runAsGroup"
+	runAsNonRoot           = "runAsNonRoot"
+	dropCapabilities       = "dropCapabilities"
+	addCapabilities        = "addCapabilities"
+	privileged             = "privileged"
 	readOnlyRootFileSystem = "readOnlyRootFileSystem"
 	hostPID                = "hostPID"
 	hostIPC                = "hostIPC"

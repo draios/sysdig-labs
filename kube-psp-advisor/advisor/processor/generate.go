@@ -2,20 +2,21 @@ package processor
 
 import (
 	"fmt"
+	"sysdig-labs/kube-psp-advisor/advisor/report"
+	"sysdig-labs/kube-psp-advisor/advisor/types"
+	"sysdig-labs/kube-psp-advisor/utils"
+	"time"
+
 	"k8s.io/api/core/v1"
 	"k8s.io/api/policy/v1beta1"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/tools/clientcmd"
-	"scratch/kaizhe/kube-psp-advisor/advisor/report"
-	"scratch/kaizhe/kube-psp-advisor/advisor/types"
-	"scratch/kaizhe/kube-psp-advisor/utils"
-	"time"
 )
 
 type Processor struct {
 	k8sClient          *kubernetes.Clientset
 	resourceNamePrefix map[string]bool
-	namespace string
+	namespace          string
 }
 
 func NewProcessor(kubeconfig string) (*Processor, error) {
@@ -39,7 +40,7 @@ func (p *Processor) SetNamespace(ns string) {
 }
 
 // GeneratePSP generate Pod Security Policy
-func (p *Processor) GeneratePSP (cssList []types.ContainerSecuritySpec, pssList []types.PodSecuritySpec) *v1beta1.PodSecurityPolicy {
+func (p *Processor) GeneratePSP(cssList []types.ContainerSecuritySpec, pssList []types.PodSecuritySpec) *v1beta1.PodSecurityPolicy {
 	// no PSP will be generated if no security spec is provided
 	if len(cssList) == 0 && len(pssList) == 0 {
 		return nil
@@ -204,7 +205,7 @@ func (p *Processor) GeneratePSP (cssList []types.ContainerSecuritySpec, pssList 
 	return psp
 }
 
-func (p *Processor)GenerateReport(cssList []types.ContainerSecuritySpec, pssList []types.PodSecuritySpec) *report.Report {
+func (p *Processor) GenerateReport(cssList []types.ContainerSecuritySpec, pssList []types.PodSecuritySpec) *report.Report {
 	r := report.NewReport()
 
 	for _, c := range cssList {
@@ -299,4 +300,3 @@ func (p *Processor) GetSecuritySpec() ([]types.ContainerSecuritySpec, []types.Po
 
 	return cssList, pssList, nil
 }
-
