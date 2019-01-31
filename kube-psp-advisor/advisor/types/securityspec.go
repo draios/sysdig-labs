@@ -19,7 +19,6 @@ var (
 	}
 )
 
-
 //PodSecurityPolicy Recommendation System help in the following attributes:
 //	1. allowPrivilegeEscalation - done
 //	2. allowedCapabilities - done
@@ -36,8 +35,8 @@ var (
 //	13. seLinux and others - need further investigation
 
 type ContainerSecuritySpec struct {
-	Metadata Metadata `json:"parentMetadata"`
-	ContainerID string `json:"containerID"`
+	Metadata                 Metadata `json:"parentMetadata"`
+	ContainerID              string   `json:"containerID"`
 	ContainerName            string   `json:"containerName"`
 	PodName                  string   `json:"podName"`
 	Namespace                string   `json:"namespace"`
@@ -56,12 +55,12 @@ type ContainerSecuritySpec struct {
 }
 
 type PodSecuritySpec struct {
-	Metadata    Metadata `json:"metadata"`
-	Namespace   string   `json:"namespace"`
-	HostPID     bool     `json:"hostPID,omitempty"`
-	HostNetwork bool     `json:"hostMetwork,omitempty"`
-	HostIPC     bool     `json:"hostIPC,omitempty"`
-	VolumeTypes []string `json:"volumeTypes,omitempty"`
+	Metadata       Metadata `json:"metadata"`
+	Namespace      string   `json:"namespace"`
+	HostPID        bool     `json:"hostPID,omitempty"`
+	HostNetwork    bool     `json:"hostMetwork,omitempty"`
+	HostIPC        bool     `json:"hostIPC,omitempty"`
+	VolumeTypes    []string `json:"volumeTypes,omitempty"`
 	MountHostPaths []string `json:"mountedHostPath,omitempty"`
 }
 
@@ -69,7 +68,3 @@ type Metadata struct {
 	Name string `json:"name"`
 	Kind string `json:"kind"`
 }
-
-
-
-

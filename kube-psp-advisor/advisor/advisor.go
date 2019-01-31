@@ -3,12 +3,14 @@ package advisor
 import (
 	"encoding/json"
 	"fmt"
+	"os"
+	"sysdig-labs/kube-psp-advisor/advisor/processor"
+	"sysdig-labs/kube-psp-advisor/advisor/report"
+
 	"k8s.io/api/policy/v1beta1"
 	k8sJSON "k8s.io/apimachinery/pkg/runtime/serializer/json"
 	"k8s.io/client-go/kubernetes"
-	"os"
-	"scratch/kaizhe/kube-psp-advisor/advisor/processor"
-	"scratch/kaizhe/kube-psp-advisor/advisor/report"
+	_ "k8s.io/client-go/plugin/pkg/client/auth/gcp"
 )
 
 type Advisor struct {
@@ -28,8 +30,8 @@ func NewAdvisor(kubeconfig string) (*Advisor, error) {
 
 	return &Advisor{
 		podSecurityPolicy: nil,
-		processor: p,
-		report: nil,
+		processor:         p,
+		report:            nil,
 	}, nil
 }
 
@@ -48,7 +50,6 @@ func (advisor *Advisor) Process(namespace string) error {
 
 	return nil
 }
-
 
 func (advisor *Advisor) PrintReport() {
 	jsonOutput, err := json.Marshal(advisor.report)

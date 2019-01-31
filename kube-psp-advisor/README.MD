@@ -2,7 +2,7 @@
 
 ## Build
 ```
-make deps build
+make build
 ```
 
 ## Run
@@ -13,6 +13,19 @@ make deps build
 1. Help verify the deployment, daemonset settings in cluster and plan to reduce unnecessary privileges/resources
 2. Apply Pod Security Policy to the target cluster
 3. flag `--namespace=<namespace>` is introduced to debug and narrow down the security context per namespace
+
+## Attributes Aggregated for Pod Security Policy
+- allowPrivilegeEscalation
+- allowedCapabilities
+- allowedHostPaths
+- hostIPC
+- hostNetwork
+- hostPID
+- privileged
+- readOnlyRootFilesystem
+- runAsUser
+- Volume
+
 
 ## Sample Pod Security Policy
 Command: `./kube-psp-advisor --namespace=psp-test`

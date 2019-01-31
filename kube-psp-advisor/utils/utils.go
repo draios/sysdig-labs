@@ -1,7 +1,7 @@
 package utils
 
 // Convert array to map
-func ArrayToMap(input []string) map[string]bool{
+func ArrayToMap(input []string) map[string]bool {
 	output := map[string]bool{}
 	for _, s := range input {
 		output[s] = true
@@ -17,4 +17,3 @@ func MapToArray(input map[string]bool) []string {
 
 	return output
 }
-

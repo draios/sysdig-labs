@@ -1,10 +1,7 @@
 .PHONY: all
 
-all: deps build test
+all: build test
 
-deps:
-	@echo "+ $@"
-	./scripts/deps
 test:
 	@echo "+ $@"
 	./scripts/test
