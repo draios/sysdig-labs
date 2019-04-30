@@ -74,7 +74,7 @@ Command: `./kube-psp-advisor --namespace=psp-test --report | jq .podSecuritySpec
       },
       "namespace": "psp-test",
       "hostPID": true,
-      "hostMetwork": true,
+      "hostNetwork": true,
       "hostIPC": true,
       "volumeTypes": [
         "configMap"
@@ -103,7 +103,7 @@ Command: `./kube-psp-advisor --namespace=psp-test --report | jq .podSecuritySpec
       },
       "namespace": "psp-test",
       "hostPID": true,
-      "hostMetwork": true,
+      "hostNetwork": true,
       "hostIPC": true,
       "volumeTypes": [
         "configMap"
@@ -115,7 +115,7 @@ Command: `./kube-psp-advisor --namespace=psp-test --report | jq .podSecuritySpec
         "kind": "Pod"
       },
       "namespace": "psp-test",
-      "hostMetwork": true,
+      "hostNetwork": true,
       "volumeTypes": [
         "hostPath",
         "secret"
@@ -147,7 +147,7 @@ Command: `./kube-psp-advisor --namespace=psp-test --report | jq .podSecuritySpec
       },
       "namespace": "psp-test",
       "hostPID": true,
-      "hostMetwork": true,
+      "hostNetwork": true,
       "hostIPC": true,
       "volumeTypes": [
         "configMap"
