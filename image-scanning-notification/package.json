@@ -18,7 +18,7 @@
   "homepage": "https://github.com/davideschiera/scanning-to-email#readme",
   "dependencies": {
     "axios": "0.18.0",
-    "handlebars": "4.0.12",
+    "handlebars": "4.7.7",
     "minimist": "1.2.0",
     "moment": "2.22.2"
   },
