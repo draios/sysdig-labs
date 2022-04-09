@@ -20,7 +20,7 @@
     "axios": "0.18.0",
     "handlebars": "4.0.12",
     "minimist": "1.2.0",
-    "moment": "2.22.2"
+    "moment": "2.29.2"
   },
   "devDependencies": {
     "nodemailer": "4.7.0"
